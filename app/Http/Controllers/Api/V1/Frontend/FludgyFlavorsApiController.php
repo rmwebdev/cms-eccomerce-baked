@@ -15,7 +15,6 @@ class FludgyFlavorsApiController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('fludgy_flavor_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new FludgyFlavorResource(FludgyFlavor::with(['product'])->get());
     }
@@ -23,7 +22,6 @@ class FludgyFlavorsApiController extends Controller
 
     public function show(FludgyFlavor $fludgyFlavor)
     {
-        abort_if(Gate::denies('fludgy_flavor_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new FludgyFlavorResource($fludgyFlavor->load(['product']));
     }

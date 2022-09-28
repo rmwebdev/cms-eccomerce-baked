@@ -15,14 +15,12 @@ class BestSellersApiController extends Controller
 {
     public function index()
     {
-        abort_if(Gate::denies('best_seller_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new BestSellerResource(BestSeller::with(['product'])->get());
     }
 
     public function show(BestSeller $bestSeller)
     {
-        abort_if(Gate::denies('best_seller_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new BestSellerResource($bestSeller->load(['product']));
     }

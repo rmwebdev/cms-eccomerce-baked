@@ -18,7 +18,6 @@ class PersonalizedTreeApiController extends Controller
 
     public function index()
     {
-        abort_if(Gate::denies('personalized_tree_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new PersonalizedTreeResource(PersonalizedTree::with(['products'])->get());
     }
@@ -26,7 +25,6 @@ class PersonalizedTreeApiController extends Controller
   
     public function show(PersonalizedTree $personalizedTree)
     {
-        abort_if(Gate::denies('personalized_tree_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new PersonalizedTreeResource($personalizedTree->load(['products']));
     }
