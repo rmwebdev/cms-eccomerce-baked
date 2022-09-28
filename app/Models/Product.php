@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Product extends Model implements HasMedia
 {
     use InteractsWithMedia;
     use Auditable;
     use HasFactory;
+    use Sluggable;
 
     public $table = 'products';
 
@@ -127,5 +129,13 @@ class Product extends Model implements HasMedia
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
     }
 }

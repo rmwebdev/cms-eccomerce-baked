@@ -17,6 +17,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use Cviebrock\EloquentSluggable\Services\SlugService;
+
 class ProductController extends Controller
 {
     use MediaUploadingTrait;
@@ -272,5 +274,10 @@ class ProductController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function checkSLug(Request $request){
+        $slug = SlugService::createSlug(Product::class, 'slug', $request->name);
+        return response()->json(['slug' => $slug]);
     }
 }

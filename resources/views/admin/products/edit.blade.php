@@ -2,17 +2,17 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.product.title_singular') }}
+    <div class="card-header bg-primary text-white justify-content-between">
+        <span class=""> <icon class="fa fa-pencil text-md"></icon>  Edit product</span>
     </div>
 
     <div class="card-body">
-        <form method="POST" action="{{ route("admin.products.update", [$product->id]) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route("admin.products.update", [$product->id]) }}" enctype="multipart/form-data" class="row g-3">
             @method('PUT')
             @csrf
-            <div class="form-group">
+            <div class="form-group col-6">
                 <label class="required" for="name">{{ trans('cruds.product.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $product->name) }}" required>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $product->name) }}">
                 @if($errors->has('name'))
                     <div class="invalid-feedback">
                         {{ $errors->first('name') }}
@@ -20,17 +20,27 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="description">{{ trans('cruds.product.fields.description') }}</label>
-                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description', $product->description) }}</textarea>
-                @if($errors->has('description'))
+            <div class="form-group col-6">
+                <label class="required" for="slug">{{ trans('cruds.product.fields.slug') }}</label>
+                <input class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" type="text" name="slug" id="slug" value="{{ old('slug', $product->slug) }}" required readonly>
+                @if($errors->has('slug'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('description') }}
+                        {{ $errors->first('slug') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.product.fields.description_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.product.fields.slug_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-6">
+                <label class="required" for="short_description">{{ trans('cruds.product.fields.short_description') }}</label>
+                <input class="form-control {{ $errors->has('short_description') ? 'is-invalid' : '' }}" type="text" name="short_description" id="short_description" value="{{ old('short_description', $product->short_description) }}" required>
+                @if($errors->has('short_description'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('short_description') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.short_description_helper') }}</span>
+            </div>
+            <div class="form-group col-2">
                 <label class="required" for="price">{{ trans('cruds.product.fields.price') }}</label>
                 <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', $product->price) }}" step="0.01" required>
                 @if($errors->has('price'))
@@ -40,7 +50,59 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.price_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-1">
+                <label for="stock">{{ trans('cruds.product.fields.stock') }}</label>
+                <input class="form-control {{ $errors->has('stock') ? 'is-invalid' : '' }}" type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" step="1">
+                @if($errors->has('stock'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('stock') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.stock_helper') }}</span>
+            </div>
+            <div class="form-group col-3">
+                <label for="expired_date">{{ trans('cruds.product.fields.expired_date') }}</label>
+                <input class="form-control date {{ $errors->has('expired_date') ? 'is-invalid' : '' }}" type="text" name="expired_date" id="expired_date" value="{{ old('expired_date', $product->expired_date) }}">
+                @if($errors->has('expired_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('expired_date') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.expired_date_helper') }}</span>
+            </div>
+            <div class="form-group col-1">
+                <label for="discount">{{ trans('cruds.product.fields.discount') }}(%)</label>
+                <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" type="number" name="discount" id="discount" value="{{ old('discount', $product->discount) }}" step="1">
+                @if($errors->has('discount'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('discount') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.discount_helper') }}</span>
+            </div>
+            <div class="form-group col-2">
+                <label for="price_new">{{ trans('cruds.product.fields.price_new') }}</label>
+                <input class="form-control {{ $errors->has('price_new') ? 'is-invalid' : '' }}" type="number" name="price_new" id="price_new" value="{{ old('price_new', $product->price_new) }}" step="0.01" readonly>
+                @if($errors->has('price_new'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('price_new') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.price_new_helper') }}</span>
+            </div>
+            <div class="form-group col-9"></div>
+            <div class="form-group col-6">
+                <label for="description">{{ trans('cruds.product.fields.description') }}</label>
+                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" rows="8" name="description" id="description">{{ old('description', $product->description) }}</textarea>
+                @if($errors->has('description'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('description') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.description_helper') }}</span>
+            </div>
+            
+            <div class="form-group col-3">
                 <label for="categories">{{ trans('cruds.product.fields.category') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -58,7 +120,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.category_helper') }}</span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-3">
                 <label for="tags">{{ trans('cruds.product.fields.tag') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -76,28 +138,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.tag_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="short_description">{{ trans('cruds.product.fields.short_description') }}</label>
-                <input class="form-control {{ $errors->has('short_description') ? 'is-invalid' : '' }}" type="text" name="short_description" id="short_description" value="{{ old('short_description', $product->short_description) }}" required>
-                @if($errors->has('short_description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('short_description') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.short_description_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="slug">{{ trans('cruds.product.fields.slug') }}</label>
-                <input class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" type="text" name="slug" id="slug" value="{{ old('slug', $product->slug) }}" required>
-                @if($errors->has('slug'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('slug') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.slug_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="thumb">{{ trans('cruds.product.fields.thumb') }}</label>
+            <div class="form-group col-2">
+                <label class="required" for="thumb">{{ trans('cruds.product.fields.thumb') }}&nbsp;(Primary image)</label>
                 <div class="needsclick dropzone {{ $errors->has('thumb') ? 'is-invalid' : '' }}" id="thumb-dropzone">
                 </div>
                 @if($errors->has('thumb'))
@@ -107,8 +149,8 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.thumb_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="images">{{ trans('cruds.product.fields.images') }}</label>
+            <div class="form-group col-10">
+                <label for="images">{{ trans('cruds.product.fields.images') }}&nbsp; (Slider images)</label>
                 <div class="needsclick dropzone {{ $errors->has('images') ? 'is-invalid' : '' }}" id="images-dropzone">
                 </div>
                 @if($errors->has('images'))
@@ -118,51 +160,14 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.images_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="price_new">{{ trans('cruds.product.fields.price_new') }}</label>
-                <input class="form-control {{ $errors->has('price_new') ? 'is-invalid' : '' }}" type="number" name="price_new" id="price_new" value="{{ old('price_new', $product->price_new) }}" step="0.01">
-                @if($errors->has('price_new'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('price_new') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.price_new_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="discount">{{ trans('cruds.product.fields.discount') }}</label>
-                <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" type="number" name="discount" id="discount" value="{{ old('discount', $product->discount) }}" step="1">
-                @if($errors->has('discount'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('discount') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.discount_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="stock">{{ trans('cruds.product.fields.stock') }}</label>
-                <input class="form-control {{ $errors->has('stock') ? 'is-invalid' : '' }}" type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" step="1">
-                @if($errors->has('stock'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('stock') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.stock_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="expired_date">{{ trans('cruds.product.fields.expired_date') }}</label>
-                <input class="form-control date {{ $errors->has('expired_date') ? 'is-invalid' : '' }}" type="text" name="expired_date" id="expired_date" value="{{ old('expired_date', $product->expired_date) }}">
-                @if($errors->has('expired_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('expired_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.expired_date_helper') }}</span>
-            </div>
             <input name="user_update_id" value="{{ Auth::user()->id }}" type="hidden">
             <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
+                <button class="btn btn-primary mr-2" type="submit">
+                    Update Product
                 </button>
+                <a class="btn btn-danger" href="{{ route('admin.products.index') }}">
+                    Cancel
+                </a>
             </div>
         </form>
     </div>
@@ -174,6 +179,28 @@
 
 @section('scripts')
 <script>
+
+    // slug function
+    $('#name').change(function(e){
+        $.get("{{ route('admin.products.checkSlug')}}",
+            { 'name' : $(this).val() },
+            function( data ) {
+                $('#slug').val(data.slug);
+            })
+    })
+
+    // discount calculate function
+    $('#discount').change(function(e){
+        let price = 0
+        let discount = parseInt($(this).val())
+        let old_price = parseInt($('#price').val())
+        price = old_price - (discount * old_price / 100)
+        
+        $('#price_new').val(price);
+            
+    })
+
+
     Dropzone.options.thumbDropzone = {
     url: '{{ route('admin.products.storeMedia') }}',
     maxFilesize: 2, // MB
@@ -229,6 +256,7 @@
 
 </script>
 <script>
+    
     var uploadedImagesMap = {}
 Dropzone.options.imagesDropzone = {
     url: '{{ route('admin.products.storeMedia') }}',

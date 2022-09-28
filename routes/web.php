@@ -40,6 +40,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('product-tags', 'ProductTagController');
 
     // Product
+
+    Route::get('products/check_slug', 'ProductController@checkSlug')->name('products.checkSlug');
     Route::delete('products/destroy', 'ProductController@massDestroy')->name('products.massDestroy');
     Route::post('products/media', 'ProductController@storeMedia')->name('products.storeMedia');
     Route::post('products/ckmedia', 'ProductController@storeCKEditorImages')->name('products.storeCKEditorImages');
