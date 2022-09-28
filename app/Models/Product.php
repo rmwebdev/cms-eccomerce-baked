@@ -25,7 +25,6 @@ class Product extends Model implements HasMedia
     ];
 
     protected $appends = [
-        'photo',
         'thumb',
         'images',
     ];
@@ -43,6 +42,7 @@ class Product extends Model implements HasMedia
         'price',
         'short_description',
         'slug',
+        'stock',
         'user_create_id',
         'user_update_id',
         'price_new',
@@ -79,17 +79,6 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(ProductTag::class);
     }
 
-    public function getPhotoAttribute()
-    {
-        $file = $this->getMedia('photo')->last();
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
-        }
-
-        return $file;
-    }
 
     public function getThumbAttribute()
     {

@@ -55,8 +55,14 @@ class UpdateProductRequest extends FormRequest
             'discount' => [
                 'nullable',
                 'integer',
-                'min:-2147483648',
-                'max:2147483647',
+                'min:0',
+                'max:99',
+            ],
+            'stock' => [
+                'nullable',
+                'integer',
+                'min:0',
+                'max:1000000',
             ],
             'expired_date' => [
                 'date_format:' . config('panel.date_format'),

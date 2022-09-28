@@ -143,6 +143,8 @@ return [
             'tag_helper'               => ' ',
             'photo'                    => 'Photo',
             'photo_helper'             => ' ',
+            'stock'                    => 'Stock',
+            'stock_helper'             => ' ',
             'created_at'               => 'Created at',
             'created_at_helper'        => ' ',
             'updated_at'               => 'Updated At',

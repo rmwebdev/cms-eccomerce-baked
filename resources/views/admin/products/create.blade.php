@@ -5,7 +5,6 @@
     <div class="card-header">
         {{ trans('global.create') }} {{ trans('cruds.product.title_singular') }}
     </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.products.store") }}" enctype="multipart/form-data">
             @csrf
@@ -20,6 +19,26 @@
                 <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required" for="price">{{ trans('cruds.product.fields.price') }}</label>
+                <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', '') }}" step="0.01" required>
+                @if($errors->has('price'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('price') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.price_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="short_description">{{ trans('cruds.product.fields.short_description') }}</label>
+                <input class="form-control {{ $errors->has('short_description') ? 'is-invalid' : '' }}" type="text" name="short_description" id="short_description" value="{{ old('short_description', '') }}" required>
+                @if($errors->has('short_description'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('short_description') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.short_description_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="description">{{ trans('cruds.product.fields.description') }}</label>
                 <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
                 @if($errors->has('description'))
@@ -30,14 +49,23 @@
                 <span class="help-block">{{ trans('cruds.product.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label class="required" for="price">{{ trans('cruds.product.fields.price') }}</label>
-                <input class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" type="number" name="price" id="price" value="{{ old('price', '') }}" step="0.01" required>
-                @if($errors->has('price'))
+                <label for="expired_date">{{ trans('cruds.product.fields.expired_date') }}</label>
+                <input class="form-control date {{ $errors->has('expired_date') ? 'is-invalid' : '' }}" type="text" name="expired_date" id="expired_date" value="{{ old('expired_date') }}">
+                @if($errors->has('expired_date'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('price') }}
+                        {{ $errors->first('expired_date') }}
                     </div>
                 @endif
-                <span class="help-block">{{ trans('cruds.product.fields.price_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.product.fields.expired_date_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="stock">{{ trans('cruds.product.fields.stock') }}</label>
+                <input class="form-control {{ $errors->has('stock') ? 'is-invalid' : '' }}" type="number" name="stock" id="stock" value="{{ old('stock') }}">
+                @if($errors->has('stock'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('stock') }}
+                    </div>
+                @endif
             </div>
             <div class="form-group">
                 <label for="categories">{{ trans('cruds.product.fields.category') }}</label>
@@ -76,27 +104,6 @@
                 <span class="help-block">{{ trans('cruds.product.fields.tag_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="photo">{{ trans('cruds.product.fields.photo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('photo') ? 'is-invalid' : '' }}" id="photo-dropzone">
-                </div>
-                @if($errors->has('photo'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('photo') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.photo_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label class="required" for="short_description">{{ trans('cruds.product.fields.short_description') }}</label>
-                <input class="form-control {{ $errors->has('short_description') ? 'is-invalid' : '' }}" type="text" name="short_description" id="short_description" value="{{ old('short_description', '') }}" required>
-                @if($errors->has('short_description'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('short_description') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.short_description_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="slug">{{ trans('cruds.product.fields.slug') }}</label>
                 <input class="form-control {{ $errors->has('slug') ? 'is-invalid' : '' }}" type="text" name="slug" id="slug" value="{{ old('slug', '') }}" required>
                 @if($errors->has('slug'))
@@ -128,37 +135,6 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.images_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label for="price_new">{{ trans('cruds.product.fields.price_new') }}</label>
-                <input class="form-control {{ $errors->has('price_new') ? 'is-invalid' : '' }}" type="number" name="price_new" id="price_new" value="{{ old('price_new', '') }}" step="0.01">
-                @if($errors->has('price_new'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('price_new') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.price_new_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="discount">{{ trans('cruds.product.fields.discount') }}</label>
-                <input class="form-control {{ $errors->has('discount') ? 'is-invalid' : '' }}" type="number" name="discount" id="discount" value="{{ old('discount', '0') }}" step="1">
-                @if($errors->has('discount'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('discount') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.discount_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="expired_date">{{ trans('cruds.product.fields.expired_date') }}</label>
-                <input class="form-control date {{ $errors->has('expired_date') ? 'is-invalid' : '' }}" type="text" name="expired_date" id="expired_date" value="{{ old('expired_date') }}">
-                @if($errors->has('expired_date'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('expired_date') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.expired_date_helper') }}</span>
-            </div>
-
             <input name="user_create_id" value="{{ Auth::user()->id }}" type="hidden">
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -174,61 +150,6 @@
 @endsection
 
 @section('scripts')
-<script>
-    Dropzone.options.photoDropzone = {
-    url: '{{ route('admin.products.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    maxFiles: 1,
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2,
-      width: 4096,
-      height: 4096
-    },
-    success: function (file, response) {
-      $('form').find('input[name="photo"]').remove()
-      $('form').append('<input type="hidden" name="photo" value="' + response.name + '">')
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="photo"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
-      }
-    },
-    init: function () {
-@if(isset($product) && $product->photo)
-      var file = {!! json_encode($product->photo) !!}
-          this.options.addedfile.call(this, file)
-      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="photo" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
-@endif
-    },
-    error: function (file, response) {
-        if ($.type(response) === 'string') {
-            var message = response //dropzone sends it's own error messages in string
-        } else {
-            var message = response.errors.file
-        }
-        file.previewElement.classList.add('dz-error')
-        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-        _results = []
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            node = _ref[_i]
-            _results.push(node.textContent = message)
-        }
-
-        return _results
-    }
-}
-
-</script>
 <script>
     Dropzone.options.thumbDropzone = {
     url: '{{ route('admin.products.storeMedia') }}',

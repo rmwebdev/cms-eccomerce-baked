@@ -12,12 +12,13 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable()->unique();
             $table->longText('description')->nullable();
-            $table->decimal('price', 15, 2)->nullable();
+            $table->decimal('price', 15, 0)->nullable();
             $table->string('short_description')->nullable();
             $table->string('slug')->nullable()->unique();
-            $table->decimal('price_new', 15, 2)->nullable();
+            $table->decimal('price_new', 15, 0)->nullable();
             $table->integer('discount')->nullable();
             $table->date('expired_date')->nullable();
+            $table->integer('stock')->nullable();
             $table->timestamps();
         });
     }
