@@ -31,7 +31,6 @@ class ProductController extends Controller
             $query = Product::with(['categories', 'tags', 'user_create', 'user_update'])->select(sprintf('%s.*', (new Product())->table));
             $table = Datatables::of($query);
 
-            $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
@@ -55,44 +54,19 @@ class ProductController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
             $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : '';
+                return $row->price ? "Rp " . number_format($row->price,0,',','.') : '';
             });
             $table->editColumn('category', function ($row) {
                 $labels = [];
                 foreach ($row->categories as $category) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $category->name);
+                    $labels[] = sprintf('<span class="badge text-bg-dark">%s</span>', $category->name);
                 }
 
                 return implode(' ', $labels);
-            });
-            $table->editColumn('tag', function ($row) {
-                $labels = [];
-                foreach ($row->tags as $tag) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('photo', function ($row) {
-                if ($photo = $row->photo) {
-                    return sprintf(
-        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-        $photo->url,
-        $photo->thumbnail
-    );
-                }
-
-                return '';
             });
             $table->editColumn('short_description', function ($row) {
                 return $row->short_description ? $row->short_description : '';
-            });
-            $table->editColumn('slug', function ($row) {
-                return $row->slug ? $row->slug : '';
             });
             $table->editColumn('thumb', function ($row) {
                 if ($photo = $row->thumb) {
@@ -105,17 +79,7 @@ class ProductController extends Controller
 
                 return '';
             });
-            $table->editColumn('images', function ($row) {
-                if (!$row->images) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->images as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
+            
             $table->addColumn('user_create_name', function ($row) {
                 return $row->user_create ? $row->user_create->name : '';
             });
@@ -125,13 +89,13 @@ class ProductController extends Controller
             });
 
             $table->editColumn('price_new', function ($row) {
-                return $row->price_new ? $row->price_new : '';
+                return $row->price_new ? "Rp " . number_format($row->price_new,0,',','.') : '';
             });
             $table->editColumn('discount', function ($row) {
-                return $row->discount ? $row->discount : '';
+                return $row->discount ? $row->discount . '%' : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'tag', 'photo', 'thumb', 'images', 'user_create', 'user_update']);
+            $table->rawColumns(['actions', 'category', 'thumb', 'user_create', 'user_update']);
 
             return $table->make(true);
         }

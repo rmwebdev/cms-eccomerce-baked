@@ -191,12 +191,22 @@
 
     // discount calculate function
     $('#discount').change(function(e){
-        let price = 0
+        let prices = 0
         let discount = parseInt($(this).val())
         let old_price = parseInt($('#price').val())
-        price = old_price - (discount * old_price / 100)
+        prices = old_price - (discount * old_price / 100)
         
-        $('#price_new').val(price);
+        $('#price_new').val(prices);
+            
+    })
+    $('#price').change(function(e){
+        let prices = 0
+        let discount = parseInt($('#discount').val())
+        let old_price = parseInt($(this).val())
+        prices = old_price - (discount * old_price / 100)
+        console.log(prices , discount, old_price)
+        
+        $('#price_new').val(prices);
             
     })
 
