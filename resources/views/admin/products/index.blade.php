@@ -121,16 +121,7 @@
         { data: 'expired_date', name: 'expired_date', width: '8%',sortable: false, searchable: false, className: 'text-left' },
         { data: 'actions', name: '{{ trans('global.actions') }}', width: '15%',sortable: false, searchable: false, className: 'text-left' }
     ],
-    // columnDefs: [
-    //     {
-    //         orderable: false,
-    //         searchable: false,
-    //         width:"15%",
-    //         targets: 12
-    //     },
-    // ],
     orderCellsTop: true,
-    // order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Product').DataTable(dtOverrideGlobals);
